@@ -107,7 +107,8 @@ class Browser : public WindowListObserver {
     ~LoginItemSettings();
     LoginItemSettings(const LoginItemSettings&);
   };
-  void SetLoginItemSettings(LoginItemSettings settings);
+  void AddToLoginItems(LoginItemSettings settings);
+  void RemoveFromLoginItems();
   LoginItemSettings GetLoginItemSettings(const LoginItemSettings& options);
 
 #if defined(OS_MACOSX)

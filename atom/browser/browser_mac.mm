@@ -217,14 +217,19 @@ Browser::LoginItemSettings Browser::GetLoginItemSettings(
   return settings;
 }
 
-void Browser::SetLoginItemSettings(LoginItemSettings settings) {
+void Browser::AddToLoginItems(LoginItemSettings settings) {
 #if defined(MAS_BUILD)
-  platform_util::SetLoginItemEnabled(settings.open_at_login);
+  platform_util::SetLoginItemEnabled(true);
 #else
-  if (settings.open_at_login)
-    base::mac::AddToLoginItems(settings.open_as_hidden);
-  else
-    base::mac::RemoveFromLoginItems();
+  base::mac::AddToLoginItems(settings.open_as_hidden);
+#endif
+}
+
+void Browser::RemoveFromLoginItems() {
+#if defined(MAS_BUILD)
+  platform_util::SetLoginItemEnabled(false);
+#else
+  base::mac::RemoveFromLoginItems();
 #endif
 }
 

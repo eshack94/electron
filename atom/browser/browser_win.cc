@@ -292,18 +292,21 @@ bool Browser::SetBadgeCount(int count) {
   return false;
 }
 
-void Browser::SetLoginItemSettings(LoginItemSettings settings) {
+void Browser::AddToLoginItems(LoginItemSettings settings) {
   base::string16 keyPath = L"Software\\Microsoft\\Windows\\CurrentVersion\\Run";
   base::win::RegKey key(HKEY_CURRENT_USER, keyPath.c_str(), KEY_ALL_ACCESS);
 
-  if (settings.open_at_login) {
-    base::string16 exe = settings.path;
-    if (FormatCommandLineString(&exe, settings.args)) {
-      key.WriteValue(GetAppUserModelID(), exe.c_str());
-    }
-  } else {
-    key.DeleteValue(GetAppUserModelID());
+  base::string16 exe = settings.path;
+  if (FormatCommandLineString(&exe, settings.args)) {
+    key.WriteValue(GetAppUserModelID(), exe.c_str());
   }
+}
+
+void Browser::RemoveFromLoginItems(LoginItemSettings settings) {
+  base::string16 keyPath = L"Software\\Microsoft\\Windows\\CurrentVersion\\Run";
+  base::win::RegKey key(HKEY_CURRENT_USER, keyPath.c_str(), KEY_ALL_ACCESS);
+
+  key.DeleteValue(GetAppUserModelID());
 }
 
 Browser::LoginItemSettings Browser::GetLoginItemSettings(

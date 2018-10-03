@@ -1252,8 +1252,10 @@ void App::BuildPrototype(v8::Isolate* isolate,
       .SetMethod("setBadgeCount", base::Bind(&Browser::SetBadgeCount, browser))
       .SetMethod("getBadgeCount", base::Bind(&Browser::GetBadgeCount, browser))
       .SetMethod("getLoginItemSettings", &App::GetLoginItemSettings)
-      .SetMethod("setLoginItemSettings",
-                 base::Bind(&Browser::SetLoginItemSettings, browser))
+      .SetMethod("addToLoginItems",
+                 base::Bind(&Browser::AddToLoginItems, browser))
+      .SetMethod("removeFromLoginItems",
+                 base::Bind(&Browser::RemoveFromLoginItems, browser))
 #if defined(OS_MACOSX)
       .SetMethod("hide", base::Bind(&Browser::Hide, browser))
       .SetMethod("show", base::Bind(&Browser::Show, browser))
