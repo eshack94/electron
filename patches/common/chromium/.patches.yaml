@@ -460,3 +460,10 @@ patches:
       desktop capture api.
     * Backports https://chromium-review.googlesource.com/c/chromium/src/+/1199806
       that fixes crash with screen capturer, can be removed in 71.0.3539.0
+-
+  author: Samuel Attard <samuel.r.attard@gmail.com>
+  file: isolate_holder.patch
+  description: |
+    Expose a hook that allows embedders to intercept allocated isolates
+    before they are initialized or used so they can be added to the correct
+    platform.  (In our case, node_platform)
